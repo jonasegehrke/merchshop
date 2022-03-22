@@ -1,4 +1,5 @@
 <script>
+    import { isLoggedIn } from '../../stores/store'
 
 
    async function handleLogin(){
@@ -14,6 +15,8 @@
       const respData = await resp.json();
 
       console.log("response >>>", respData)
+
+      isLoggedIn.set(respData.isLoggedIn)
    }
 
 </script>
