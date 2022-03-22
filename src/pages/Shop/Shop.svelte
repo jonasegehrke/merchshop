@@ -1,5 +1,5 @@
 <script>
-    import ShopItem from '../Shop/ShopItem.svelte'
+    import ShopItem from '../../components/ShopItem.svelte'
 </script>
 
 <div class="container">
