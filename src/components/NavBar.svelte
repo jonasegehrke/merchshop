@@ -1,5 +1,11 @@
 <script>
     import { Link } from 'svelte-navigator'
+    import { isLoggedIn } from '../stores/store'
+
+
+   
+   
+    
 </script>
 
 
@@ -9,7 +15,11 @@
         <li class="nav-item"><Link to="/shop" class="svelte-link">Shop</Link></li>
         <li class="nav-item"><Link to="/contact" class="svelte-link">Contact</Link></li>
         <li class="nav-item"><Link to="/cart" class="svelte-link">Cart</Link></li>
+        {#if $isLoggedIn}
+        <li class="nav-item"><Link to="/logout" class="svelte-link">Logout</Link></li>
+        {:else}
         <li class="nav-item"><Link to="/login" class="svelte-link">Login</Link></li>
+        {/if}
     </ul>
 </nav>
 
