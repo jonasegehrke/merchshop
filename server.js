@@ -3,6 +3,9 @@ import helmet from "helmet";
 import session from "express-session";
 import bcrypt from "bcrypt";
 import rateLimit from "express-rate-limit";
+import dotenv from 'dotenv'
+
+dotenv.config();
 const app = express();
 
 app.use(express.static("public"));
@@ -29,7 +32,7 @@ app.use("/auth", authLimiter);
 
 app.use(
   session({
-    secret: "keyboard cat you should probably change this",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false },
