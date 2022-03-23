@@ -1,13 +1,73 @@
 <script>
+    import {
+        toasts,
+        ToastContainer,
+        FlatToast
+    } from "svelte-toasts";
 
+    const validateEmail = (email) => {
+  return email.match(
+    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  );
+};
+
+async function handleSendMail(e){
+    e.preventDefault();
+
+    const email = document.getElementById("email").value
+    const subject = document.getElementById("subject").value
+    const message = document.getElementById("message").value
+
+
+    /* validate inputs */
+    if(!validateEmail(email)){
+        toasts.error('Email not valid')
+        return
+    }
+    if(subject === ''){
+        toasts.error('Subject cannot be empty')
+        return
+    }
+    if(message === ''){
+        toasts.error('Message cannot be empty')
+        return
+    }
+    
+
+    const formData = { 
+        email,
+        subject,
+        message
+    }
+
+    const url = `http://localhost:3000/mail`
+
+    console.log(formData)
+    await fetch(url, {
+            method: "POST",
+            body: JSON.stringify(formData),
+            headers: {"Content-type": "application/json; charset=UTF-8"}
+        }).then(res =>{
+            console.log(res)
+            if(res.statusText === 'OK'){
+                toasts.success('Mail sent successfully')
+            }else{
+                toasts.error('Something went wrong')
+            }
+        })
+}
 </script>
+<ToastContainer placement="bottom-right" let:data>
+    <FlatToast {data} />
+    <!-- Provider template for your toasts -->
+</ToastContainer>
 
 <div class="container">
-    <form action="mailto:jonasegehrke@gmail.com" class="form">
-        <input type="email" class="input email" placeholder="Your email">
-        <input type="text" class="input subject" placeholder="Subject">
-        <textarea type="text" cols="40" rows="5" class="input text" placeholder="Text Content"></textarea>
-        <input type="submit" class="submit-btn">
+    <form class="form">
+        <input type="email" class="input email" id="email" placeholder="Your email">
+        <input type="text" class="input subject" id="subject" placeholder="Subject">
+        <textarea type="text" cols="40" rows="5" class="input text" id="message" placeholder="Message"></textarea>
+        <input on:click={handleSendMail} type="submit" value="Submit" class="submit-btn">
     </form>
 </div>
 

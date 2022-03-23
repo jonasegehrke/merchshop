@@ -4,10 +4,13 @@ import session from "express-session";
 import bcrypt from "bcrypt";
 import rateLimit from "express-rate-limit";
 import dotenv from 'dotenv'
+import cors from 'cors'
 
 dotenv.config();
 const app = express();
 
+app.use(express.json());
+app.use(cors())
 app.use(express.static("public"));
 app.use(helmet()); //https://www.npmjs.com/package/helmet
 
@@ -61,7 +64,7 @@ async function comparePasswords(req, res, next){
 
     if(username != req.query.username){
         console.log("username didnt match")
-        res.send({ message: "Permission denied: username did not match" });
+        res.send({ message: "Permission denied: username did not match", isLoggedIn: false });
         return
     }
 
@@ -79,15 +82,19 @@ async function comparePasswords(req, res, next){
 
 
 app.get('/auth', comparePasswords, (req, res) => {
-    res.header('Access-Control-Allow-Origin', '*');
+    
 
     if(!req.session.isLoggedIn){
-        res.send({ isLoggedIn: false });
+      res.send({ message: "Permission denied: password did not match", isLoggedIn: false });
         return
     }
     res.send({ isLoggedIn: true });
 })
 
+app.post("/mail" , (req, res) =>{
+  console.log(req.body)
+  res.send( { status: "success" })
+});
 
 app.get("*", (req, res) => {
   res.send("<h1>Page not found: 404</h1>");

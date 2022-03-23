@@ -1,6 +1,11 @@
 <script>
     import { useNavigate, useLocation } from "svelte-navigator";
     import { isLoggedIn } from "../../stores/store";
+    import {
+        toasts,
+        ToastContainer,
+        FlatToast
+    } from "svelte-toasts";
   
     const navigate = useNavigate();
     const location = useLocation();
@@ -10,6 +15,7 @@
     console.log($isLoggedIn);
   
     $: if ($isLoggedIn === false) {
+      toasts.info("Successfully logged out");
       navigate("/login", {
         state: { from: $location.pathname },
         replace: true,
