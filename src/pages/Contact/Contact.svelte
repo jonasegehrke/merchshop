@@ -1,122 +1,146 @@
 <script>
-    import {
-        toasts,
-        ToastContainer,
-        FlatToast
-    } from "svelte-toasts";
+  import { toasts, ToastContainer, FlatToast } from "svelte-toasts";
 
-    const validateEmail = (email) => {
-  return email.match(
-    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-  );
-};
+  const validateEmail = (email) => {
+    return email.match(
+      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
+  };
 
-async function handleSendMail(e){
+  async function handleSendMail(e) {
     e.preventDefault();
 
-    const email = document.getElementById("email").value
-    const subject = document.getElementById("subject").value
-    const message = document.getElementById("message").value
-
+    const email = document.getElementById("email").value;
+    const subject = document.getElementById("subject").value;
+    const message = document.getElementById("message").value;
 
     /* validate inputs */
-    if(!validateEmail(email)){
-        toasts.error('Email not valid')
-        return
+    if (!validateEmail(email)) {
+      toasts.error("Email not valid");
+      return;
     }
-    if(subject === ''){
-        toasts.error('Subject cannot be empty')
-        return
+    if (subject === "") {
+      toasts.error("Subject cannot be empty");
+      return;
     }
-    if(message === ''){
-        toasts.error('Message cannot be empty')
-        return
+    if (message === "") {
+      toasts.error("Message cannot be empty");
+      return;
     }
+
+    const formData = {
+      email,
+      subject,
+      message,
+    };
+
+    const url = `http://localhost:3000/mail`;
+
+    console.log(formData);
+    try {
     
-
-    const formData = { 
-        email,
-        subject,
-        message
-    }
-
-    const url = `http://localhost:3000/mail`
-
-    console.log(formData)
     await fetch(url, {
-            method: "POST",
-            body: JSON.stringify(formData),
-            headers: {"Content-type": "application/json; charset=UTF-8"}
-        }).then(res =>{
-            console.log(res)
-            if(res.statusText === 'OK'){
-                toasts.success('Mail sent successfully')
-            }else{
-                toasts.error('Something went wrong')
-            }
-        })
-}
+      method: "POST",
+      body: JSON.stringify(formData),
+      headers: { "Content-type": "application/json; charset=UTF-8" },
+    })
+      .then((response) => response.json())
+      .then((responseText) => {
+        console.log(responseText.status);
+        if (responseText.status === "success") {
+          toasts.success("Mail sent successfully");
+        } else {
+          toasts.error("Something went wrong");
+        }
+      });
+
+    } catch (error) {
+      toasts.error("Too many requests");
+    }
+  }
 </script>
+
 <ToastContainer placement="bottom-right" let:data>
-    <FlatToast {data} />
-    <!-- Provider template for your toasts -->
+  <FlatToast {data} />
 </ToastContainer>
 
 <div class="container">
-    <form class="form">
-        <input type="email" class="input email" id="email" placeholder="Your email">
-        <input type="text" class="input subject" id="subject" placeholder="Subject">
-        <textarea type="text" cols="40" rows="5" class="input text" id="message" placeholder="Message"></textarea>
-        <input on:click={handleSendMail} type="submit" value="Submit" class="submit-btn">
-    </form>
+  <form class="form">
+    <input
+      type="email"
+      class="input email"
+      id="email"
+      placeholder="Your email"
+    />
+    <input
+      type="text"
+      class="input subject"
+      id="subject"
+      placeholder="Subject"
+    />
+    <textarea
+      type="text"
+      cols="40"
+      rows="5"
+      class="input text"
+      id="message"
+      placeholder="Message"
+    />
+    <input
+      on:click={handleSendMail}
+      type="submit"
+      value="Submit"
+      class="submit-btn"
+    />
+  </form>
 </div>
 
 <style>
-    .container{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        
-        height: 100%;
-    }
-    .form{
-        display: flex;
-        width: 30vw;
-        flex-wrap: wrap;
-        justify-content: space-between;
-    }
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    .input{
-        padding: 5px;
-        margin: 10px;
-        border-radius: 20px;
-        text-indent: 10px;
-    }
+    height: 100%;
+  }
+  .form {
+    display: flex;
+    width: 30vw;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
 
-    .email{
-        width: 45%;
-    }
+  .input {
+    padding: 5px;
+    margin: 10px;
+    border-radius: 20px;
+    text-indent: 10px;
+  }
 
-    .subject{
-        width: 45%;
-    }
+  .email {
+    width: 45%;
+  }
 
-    .text{
-        text-align: start;
-        width: 100%;
-        height: 200px;
-    }
+  .subject {
+    width: 45%;
+  }
 
-    .submit-btn{
-        border: none;
-        margin-left: 10px;
-        background: rgba(70, 70, 70, 0.507);
-        border-radius: 25px;
-        padding: 5px 20px;
-        cursor: pointer;
-    }
+  .text {
+    text-align: start;
+    width: 100%;
+    height: 200px;
+  }
 
-    .submit-btn:hover{
-        box-shadow: 0 0 0 1px black;
-    }
+  .submit-btn {
+    border: none;
+    margin-left: 10px;
+    background: rgba(70, 70, 70, 0.507);
+    border-radius: 25px;
+    padding: 5px 20px;
+    cursor: pointer;
+  }
+
+  .submit-btn:hover {
+    box-shadow: 0 0 0 1px black;
+  }
 </style>

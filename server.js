@@ -5,6 +5,7 @@ import bcrypt from "bcrypt";
 import rateLimit from "express-rate-limit";
 import dotenv from 'dotenv'
 import cors from 'cors'
+import nodemailer from 'nodemailer'
 
 dotenv.config();
 const app = express();
@@ -32,6 +33,15 @@ const authLimiter = rateLimit({
 });
 
 app.use("/auth", authLimiter);
+
+const mailLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 2, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
+
+app.use('/mail' ,mailLimiter)
 
 app.use(
   session({
@@ -93,7 +103,31 @@ app.get('/auth', comparePasswords, (req, res) => {
 
 app.post("/mail" , (req, res) =>{
   console.log(req.body)
-  res.send( { status: "success" })
+
+  const transporter = nodemailer.createTransport({
+    service: process.env.MAIL_SERVICE,
+    auth: {
+      user: process.env.GMAIL_USER,
+      pass: process.env.GMAIL_PASS
+    }
+  })
+
+  const mailOptions = {
+    from: req.body.email,
+    to: 'grannymerch@gmail.com',
+    subject: `Message from ${req.body.email}: ${req.body.subject}`,
+    text: req.body.message
+  }
+
+  transporter.sendMail(mailOptions, (error, info) =>{
+    if(error){
+      console.log(error)
+      res.send({ status: 'Error sending the mail' })
+    }else{
+      console.log("email sent")
+      res.send( { status: "success" })
+    }
+  })
 });
 
 app.get("*", (req, res) => {
