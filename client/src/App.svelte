@@ -9,6 +9,7 @@
   import Contact from "./pages/Contact/Contact.svelte";
   import NavBar from "./components/NavBar.svelte";
   import { toasts, ToastContainer, FlatToast } from "svelte-toasts";
+import Inspect from "./pages/Inspect/Inspect.svelte";
 </script>
 
 <Router>
@@ -21,6 +22,10 @@
 
       <Route path="/shop">
         <Shop />
+      </Route>
+
+      <Route path="inspect/:id" let:params>
+        <Inspect id="{params.id}" />
       </Route>
 
       <Route path="/contact">

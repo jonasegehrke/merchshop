@@ -1,7 +1,7 @@
 <script>
   export let imgUrl;
   export let itemName;
-  export let itemSizes;
+  export let itemPrice;
 
 
 </script>
@@ -11,7 +11,7 @@
   <hr>
   <div class="item-desc">
     <p>{itemName}</p>
-    <p>{itemSizes}</p>
+    <p>{itemPrice} DKK</p>
   </div>
 </div>
 
@@ -33,6 +33,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        color: black;
     }
 
     .item-desc p {
