@@ -2,6 +2,8 @@
   export let imgUrl;
   export let itemName;
   export let itemSizes;
+
+
 </script>
 
 <div class="item">

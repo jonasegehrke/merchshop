@@ -1,5 +1,5 @@
 <script>
-    import { isLoggedIn } from "../../stores/store";
+    import { isLoggedIn, responseData } from "../../stores/store";
     import { useNavigate, useLocation } from "svelte-navigator";
     import {
         toasts,
@@ -18,23 +18,24 @@
 
         const data = { username: username, password: password };
 
-        const resp = await fetch(
-            `${url}?username=${username}&password=${password}`
-        );
-        const respData = await resp.json();
+        
+        await fetch(url, {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: { "Content-type": "application/json; charset=UTF-8" }
+        }).then((response) => response.json()).then((data)=> {
+            isLoggedIn.set(data.isLoggedIn)
+            responseData.set(data)
+        })
 
-        console.log("response >>>", respData);
-
-        isLoggedIn.set(respData.isLoggedIn);
-
-        if (respData.isLoggedIn) {
+        if ($isLoggedIn) {
             toasts.success("Successfully logged in");
             navigate("/", {
                 state: { from: $location.pathname },
                 replace: true,
             });
         } else {
-            toasts.error(respData.message);
+            toasts.error($responseData.message);
         }
     }
 </script>

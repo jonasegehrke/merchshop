@@ -72,14 +72,14 @@ async function encryptPassword(req, res, next){
 async function comparePasswords(req, res, next){
     res.header('Access-Control-Allow-Origin', '*');
 
-    if(username != req.query.username){
+    if(username != req.body.username){
         console.log("username didnt match")
         res.send({ message: "Permission denied: username did not match", isLoggedIn: false });
         return
     }
 
     //TODO: Fetch password from databse here and store it as hashedPass
-    const isSame = await bcrypt.compare(req.query.password, hashedPass);
+    const isSame = await bcrypt.compare(req.body.password, hashedPass);
 
     console.log("isSame >>> ", isSame)
 
@@ -91,7 +91,7 @@ async function comparePasswords(req, res, next){
 }
 
 
-app.get('/auth', comparePasswords, (req, res) => {
+app.post('/auth', comparePasswords, (req, res) => {
     
 
     if(!req.session.isLoggedIn){
@@ -137,3 +137,5 @@ app.get("*", (req, res) => {
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => console.log("Running on server", PORT));
+
+
