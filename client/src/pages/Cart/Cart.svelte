@@ -1,25 +1,20 @@
 <script>
-    import CartItem from '../../components/CartItem.svelte'
-
+  import CartItem from "../../components/CartItem.svelte";
+  import { cart } from "../../stores/store.js";
 </script>
 
 <div class="container">
-    <CartItem itemImg="images/item.png" productTitle="Shirt" productSize="L" productQuantity="1"/>
-    <CartItem itemImg="images/item.png" productTitle="Shirt" productSize="L" productQuantity="1"/>
-    <CartItem itemImg="images/item.png" productTitle="Shirt" productSize="L" productQuantity="1"/>
-    <CartItem itemImg="images/item.png" productTitle="Shirt" productSize="L" productQuantity="1"/>
+  {#each $cart as item}
+    <CartItem {item} />
+  {/each}
 </div>
 
 <style>
-    .container{
-        
-        width: 50%;
-
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-
-    }
-
+  .container {
+    height: 90vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 </style>

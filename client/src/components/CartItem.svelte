@@ -1,31 +1,39 @@
 <script>
-  export let itemImg;
-  export let productTitle;
-  export let productSize;
-  export let productQuantity;
+  import { cart } from "../stores/store.js";
+  import { toasts } from "svelte-toasts";
+
+  export let item;
+
+  function handleRemoveFromCart() {
+    $cart = $cart.filter(function (value) {
+      if (value.id != item.id) return value;
+    });
+
+    toasts.info("Removed from cart");
+  }
 </script>
 
 <div class="item-container">
   <hr />
   <div class="cart-item">
     <div class="item-specs">
-      <p class="product-title">{productTitle}</p>
-      <p class="product-size">Size: {productSize}</p>
-      <p class="product-quantity">Quantity: {productQuantity}</p>
-      <button class="product-remove-btn">Del</button>
+      <p class="product-title">{item.name}</p>
+      <p class="product-size">Size: {item.size}</p>
+      <p class="product-quantity">{item.price} DKK</p>
+      <button on:click={handleRemoveFromCart} class="product-remove-btn">Del</button>
     </div>
     <div class="thumbnail">
-      <img src={itemImg} alt="item-pic" class="item-img" />
+      <img src={item.image} alt="item-pic" class="item-img" />
     </div>
   </div>
   <hr />
 </div>
 
 <style>
-
-    .item-container{
-        margin: 20px 0;
-    }
+  .item-container {
+    margin: 20px 0;
+    width: 70%;
+  }
   .cart-item {
     display: flex;
     justify-content: space-between;

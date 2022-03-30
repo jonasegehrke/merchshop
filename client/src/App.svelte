@@ -1,5 +1,5 @@
 <script>
-  import { Router, Link, Route } from "svelte-navigator";
+  import { Router, Route } from "svelte-navigator";
   import PrivateRoute from "./components/PrivateRoute.svelte";
   import Logout from "./pages/Login/Logout.svelte";
   import Home from "./pages/Home/Home.svelte";
@@ -45,9 +45,7 @@ import Inspect from "./pages/Inspect/Inspect.svelte";
 
       <ToastContainer placement="bottom-right" let:data>
         <FlatToast {data} />
-        <!-- Provider template for your toasts -->
       </ToastContainer>
-      <!-- <Route path="/logout" component={Logout} /> -->
     </div>
   </main>
 </Router>

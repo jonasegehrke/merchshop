@@ -7,13 +7,13 @@
       <img src="images/profile.jpg" alt="" class="home-img" />
     </div>
     <div class="home-content">
-        <div class="home-upper">
-            <h1>Hi, i am granny</h1>
-        </div>
-        <hr>
-        <div class="home-lower">
-            <h2>This is a webshop containing my most valuable merchandise</h2>
-        </div>
+      <div>
+        <h1>Hi, i am granny</h1>
+      </div>
+      <hr />
+      <div>
+        <h2>This is a webshop containing my most valuable merchandise</h2>
+      </div>
     </div>
   </div>
 </main>
@@ -26,7 +26,6 @@
     transform: translate(-50%, -50%);
     width: 70vw;
     height: 50vh;
-
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -53,22 +52,12 @@
     height: auto;
   }
 
-  .home-content{
+  .home-content {
     display: flex;
     flex-direction: column;
   }
 
-  .home-upper{
-
-  }
-  
-  .home-lower{
-
-  }
-
-  .home-content > *{
+  .home-content > * {
     margin: 4px;
   }
-
-
 </style>

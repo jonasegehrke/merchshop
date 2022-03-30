@@ -1,5 +1,5 @@
 <script>
-  import { toasts, ToastContainer, FlatToast } from "svelte-toasts";
+  import { toasts } from "svelte-toasts";
 
   const validateEmail = (email) => {
     return email.match(
@@ -36,33 +36,25 @@
 
     const url = `http://localhost:3000/mail`;
 
-    console.log(formData);
     try {
-    
-    await fetch(url, {
-      method: "POST",
-      body: JSON.stringify(formData),
-      headers: { "Content-type": "application/json; charset=UTF-8" },
-    })
-      .then((response) => response.json())
-      .then((responseText) => {
-        console.log(responseText.status);
-        if (responseText.status === "success") {
-          toasts.success("Mail sent successfully");
-        } else {
-          toasts.error("Something went wrong");
-        }
-      });
-
+      await fetch(url, {
+        method: "POST",
+        body: JSON.stringify(formData),
+        headers: { "Content-type": "application/json; charset=UTF-8" },
+      })
+        .then((response) => response.json())
+        .then((responseText) => {
+          if (responseText.status === "success") {
+            toasts.success("Mail sent successfully");
+          } else {
+            toasts.error("Something went wrong");
+          }
+        });
     } catch (error) {
       toasts.error("Too many requests");
     }
   }
 </script>
-
-<ToastContainer placement="bottom-right" let:data>
-  <FlatToast {data} />
-</ToastContainer>
 
 <div class="container">
   <form class="form">
@@ -132,11 +124,12 @@
   }
 
   .submit-btn {
-    border: none;
-    margin-left: 10px;
-    background: rgba(70, 70, 70, 0.507);
-    border-radius: 25px;
-    padding: 5px 20px;
+    border: 1px solid var(--nav-color);
+    border-radius: 5px;
+    padding: 5px;
+    width: 100px;
+    background-color: var(--nav-color);
+    color: white;
     cursor: pointer;
   }
 
