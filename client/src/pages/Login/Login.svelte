@@ -10,7 +10,7 @@
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
 
-    const url = `http://localhost:3000/auth`;
+    const url = `http://localhost:3000/api/auth`;
 
     const data = { username: username, password: password };
 

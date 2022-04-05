@@ -1,15 +1,16 @@
 import db from './createConnection.js'
 
+await db.users.deleteMany({seeded: true});
+
 await db.users.insertOne({
     username: 'jonasegehrke',
-    password: '$2b$12$55YDSc/ZpkGJGy2BcUJXdufWm5eqAStKouzAORwFOmK4hBq3yvtIi'
+    password: '$2b$12$55YDSc/ZpkGJGy2BcUJXdufWm5eqAStKouzAORwFOmK4hBq3yvtIi',
+    seeded: true
 });
 
-await db.users.find().toArray((err, mothers) => {
-    if (err) {
-        console.log(err);
-        return;
-    }
+const users = await db.users.find().toArray();
 
-    console.log(mothers);
-});
+console.log(users);
+
+
+db.client.close();

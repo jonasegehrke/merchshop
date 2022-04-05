@@ -16,11 +16,11 @@ import Inspect from "./pages/Inspect/Inspect.svelte";
   <NavBar />
   <main>
     <div class="wrapper">
-      <Route path="/">
+      <Route path="/" primary={false}>
         <Home />
       </Route>
 
-      <Route path="/shop">
+      <Route path="/shop" primary={false}>
         <Shop />
       </Route>
 
@@ -28,7 +28,7 @@ import Inspect from "./pages/Inspect/Inspect.svelte";
         <Inspect id="{params.id}" />
       </Route>
 
-      <Route path="/contact">
+      <Route path="/contact" primary={false}>
         <Contact />
       </Route>
       <PrivateRoute path="cart" let:location>

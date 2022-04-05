@@ -34,7 +34,7 @@
       message: message.value
     };
 
-    const url = `http://localhost:3000/mail`;
+    const url = `http://localhost:3000/api/mail`;
 
     try {
       await fetch(url, {

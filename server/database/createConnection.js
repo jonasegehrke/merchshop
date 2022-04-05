@@ -8,5 +8,6 @@ const client = await MongoClient.connect(url);
 const db = client.db(dbName);
 
 export default { 
+    client: client,
     users: db.collection('users'),
 } 

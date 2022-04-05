@@ -8,8 +8,6 @@
 
   isLoggedIn.set(false);
 
-  console.log($isLoggedIn);
-
   $: if ($isLoggedIn === false) {
     toasts.info("Successfully logged out");
     navigate("/login", {
