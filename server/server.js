@@ -4,7 +4,6 @@ import session from "express-session";
 import rateLimit from "express-rate-limit";
 import dotenv from 'dotenv'
 import cors from 'cors'
-import nodemailer from 'nodemailer'
 
 import loginRouter from "./routers/loginRouter.js";
 import mailRouter from "./routers/mailRouter.js";
