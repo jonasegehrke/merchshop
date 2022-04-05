@@ -2,17 +2,17 @@
   import { toasts } from "svelte-toasts";
 
   const validateEmail = (email) => {
-    return email.match(
+    return email.value.match(
       /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     );
   };
 
   async function handleSendMail(e) {
     e.preventDefault();
-
-    const email = document.getElementById("email").value;
-    const subject = document.getElementById("subject").value;
-    const message = document.getElementById("message").value;
+    
+    const email = document.getElementById("email");
+    const subject = document.getElementById("subject");
+    const message = document.getElementById("message");
 
     /* validate inputs */
     if (!validateEmail(email)) {
@@ -29,9 +29,9 @@
     }
 
     const formData = {
-      email,
-      subject,
-      message,
+      email: email.value,
+      subject: subject.value,
+      message: message.value
     };
 
     const url = `http://localhost:3000/mail`;
@@ -46,6 +46,11 @@
         .then((responseText) => {
           if (responseText.status === "success") {
             toasts.success("Mail sent successfully");
+
+            email.value = "";
+            subject.value = "";
+            message.value = "";
+
           } else {
             toasts.error("Something went wrong");
           }

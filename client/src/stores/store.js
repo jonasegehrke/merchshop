@@ -1,6 +1,16 @@
 import { writable } from "svelte/store";
 
-export const isLoggedIn = writable(false);
+const storedLoggedIn = localStorage.getItem("loggedIn");
+const loggedIn = storedLoggedIn === "true" ? true : false;
+
+export const isLoggedIn = writable(loggedIn);
+
+isLoggedIn.subscribe(value => {
+  localStorage.setItem("loggedIn", value);
+});
+
+
+
 export const responseData = writable(null);
 export const shopItems = writable([
   {
@@ -31,6 +41,14 @@ export const shopItems = writable([
     image: "/images/item.png",
   },
 ]);
-export const cart = writable([]);
+
+const storedCart = localStorage.getItem("cart");
+const cartItems = storedCart ? JSON.parse(storedCart) : [];
+export const cart = writable(cartItems);
+cart.subscribe(value => {
+  localStorage.setItem("cart", JSON.stringify(value));
+});
+
+
 export let idIncrement = writable(1);
 

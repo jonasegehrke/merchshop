@@ -35,16 +35,30 @@
       toasts.error($responseData.message);
     }
   }
+
+  const onKeyPress = (e) => {
+    if (e.charCode === 13) {
+      handleLogin();
+    }
+  };
 </script>
 
 <div class="container">
   <h1 class="login-heading">Login</h1>
-  <input type="text" class="username" id="username" placeholder="username" />
+  <input
+    type="text"
+    class="username"
+    id="username"
+    placeholder="username"
+    on:keypress={onKeyPress}
+  />
+
   <input
     type="password"
     class="password"
     id="password"
     placeholder="password"
+    on:keypress={onKeyPress}
   />
   <button on:click={handleLogin} class="login-btn">Login</button>
 </div>
