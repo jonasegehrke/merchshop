@@ -7124,30 +7124,31 @@ var app = (function () {
     			t2 = space();
     			input2 = element("input");
     			attr_dev(input0, "type", "email");
-    			attr_dev(input0, "class", "input email svelte-ttvxk1");
+    			attr_dev(input0, "class", "input email svelte-1ndlx4g");
     			attr_dev(input0, "id", "email");
     			attr_dev(input0, "placeholder", "Your email");
-    			add_location(input0, file$3, 65, 4, 1749);
+    			add_location(input0, file$3, 63, 4, 1715);
     			attr_dev(input1, "type", "text");
-    			attr_dev(input1, "class", "input subject svelte-ttvxk1");
+    			attr_dev(input1, "class", "input subject svelte-1ndlx4g");
     			attr_dev(input1, "id", "subject");
     			attr_dev(input1, "placeholder", "Subject");
-    			add_location(input1, file$3, 71, 4, 1866);
+    			add_location(input1, file$3, 69, 4, 1832);
     			attr_dev(textarea, "type", "text");
     			attr_dev(textarea, "cols", "40");
     			attr_dev(textarea, "rows", "5");
-    			attr_dev(textarea, "class", "input text svelte-ttvxk1");
+    			attr_dev(textarea, "class", "input text svelte-1ndlx4g");
     			attr_dev(textarea, "id", "message");
     			attr_dev(textarea, "placeholder", "Message");
-    			add_location(textarea, file$3, 77, 4, 1983);
+    			add_location(textarea, file$3, 75, 4, 1949);
     			attr_dev(input2, "type", "submit");
     			input2.value = "Submit";
-    			attr_dev(input2, "class", "submit-btn svelte-ttvxk1");
-    			add_location(input2, file$3, 85, 4, 2133);
-    			attr_dev(form, "class", "form svelte-ttvxk1");
-    			add_location(form, file$3, 64, 2, 1724);
-    			attr_dev(div, "class", "container svelte-ttvxk1");
-    			add_location(div, file$3, 63, 0, 1697);
+    			attr_dev(input2, "class", "submit-btn svelte-1ndlx4g");
+    			add_location(input2, file$3, 83, 4, 2099);
+    			attr_dev(form, "id", "form");
+    			attr_dev(form, "class", "svelte-1ndlx4g");
+    			add_location(form, file$3, 62, 2, 1693);
+    			attr_dev(div, "class", "container svelte-1ndlx4g");
+    			add_location(div, file$3, 61, 0, 1666);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -7209,12 +7210,12 @@ var app = (function () {
     			return;
     		}
 
-    		if (subject === "") {
+    		if (subject.value === '') {
     			toasts.error("Subject cannot be empty");
     			return;
     		}
 
-    		if (message === "") {
+    		if (message.value === "") {
     			toasts.error("Message cannot be empty");
     			return;
     		}
@@ -7237,9 +7238,7 @@ var app = (function () {
     			}).then(response => response.json()).then(responseText => {
     				if (responseText.status === "success") {
     					toasts.success("Mail sent successfully");
-    					email.value = "";
-    					subject.value = "";
-    					message.value = "";
+    					document.getElementById('form').reset();
     				} else {
     					toasts.error("Something went wrong");
     				}

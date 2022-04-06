@@ -19,11 +19,11 @@
       toasts.error("Email not valid");
       return;
     }
-    if (subject === "") {
+    if (subject.value === '') {
       toasts.error("Subject cannot be empty");
       return;
     }
-    if (message === "") {
+    if (message.value === "") {
       toasts.error("Message cannot be empty");
       return;
     }
@@ -47,9 +47,7 @@
           if (responseText.status === "success") {
             toasts.success("Mail sent successfully");
 
-            email.value = "";
-            subject.value = "";
-            message.value = "";
+            document.getElementById('form').reset();
 
           } else {
             toasts.error("Something went wrong");
@@ -62,7 +60,7 @@
 </script>
 
 <div class="container">
-  <form class="form">
+  <form id="form">
     <input
       type="email"
       class="input email"
@@ -100,7 +98,7 @@
 
     height: 100%;
   }
-  .form {
+  #form {
     display: flex;
     width: 30vw;
     flex-wrap: wrap;
