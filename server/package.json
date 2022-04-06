@@ -1,7 +1,7 @@
 {
 
     "scripts": {
-        "seedDb": "node ./database/seedDatabase.js"
+        "seed-db": "node ./database/seedDatabase.js"
     },
     "type": "module",
     "dependencies": {

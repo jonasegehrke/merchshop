@@ -30,7 +30,7 @@
 </nav>
 
 <style>
-  :global(a) {
+  :global(.svelte-link) {
     color: var(--nav-font-color) !important;
     text-decoration: none !important;
   }

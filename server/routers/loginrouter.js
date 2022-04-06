@@ -44,4 +44,42 @@ router.post('/api/auth', comparePasswords, (req, res) => {
     res.send({ isLoggedIn: true });
 })
 
+async function checkAvailability(req, res, next){
+    const user = await db.users.find({username: req.body.username}).toArray();
+    if(user.length === 0){
+        next();
+    }else{
+        res.send({ message: "Username already exists", isLoggedIn: false });
+        return
+    }
+}
+
+async function encryptPassword(req, res, next){
+    const saltRounds = 12; //set to 12 for this project. in real life it should be random
+
+    const hashedPass = await bcrypt.hash(req.body.password, saltRounds);
+
+    req.body.password = hashedPass;
+    next();
+}
+
+async function createUser(req, res, next){
+    const user = await db.users.insertOne(req.body);
+    console.log(user)
+    
+    req.session.isLoggedIn = true;
+    next();
+}
+
+
+router.post('/api/auth/register', checkAvailability, encryptPassword, createUser, (req, res) => {
+
+    if(!req.session.isLoggedIn){
+        res.send({ message: "Permission denied: username already exists", isLoggedIn: false });
+        return
+    }
+
+    res.send({ message: "User created successfully", isLoggedIn: true });
+})
+
 export default router;

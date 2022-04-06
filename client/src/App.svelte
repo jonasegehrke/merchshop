@@ -7,6 +7,7 @@
   import Cart from "./pages/Cart/Cart.svelte";
   import Login from "./pages/Login/Login.svelte";
   import Contact from "./pages/Contact/Contact.svelte";
+  import Register from './pages/Login/Register.svelte';
   import NavBar from "./components/NavBar.svelte";
   import { toasts, ToastContainer, FlatToast } from "svelte-toasts";
 import Inspect from "./pages/Inspect/Inspect.svelte";
@@ -22,6 +23,10 @@ import Inspect from "./pages/Inspect/Inspect.svelte";
 
       <Route path="/shop" primary={false}>
         <Shop />
+      </Route>
+
+      <Route path="/register" primary={false}>
+        <Register />
       </Route>
 
       <Route path="inspect/:id" let:params>

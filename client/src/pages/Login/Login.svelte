@@ -2,6 +2,7 @@
   import { isLoggedIn, responseData } from "../../stores/store";
   import { useNavigate, useLocation } from "svelte-navigator";
   import { toasts } from "svelte-toasts";
+  import { Link } from "svelte-navigator";
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -61,6 +62,14 @@
     on:keypress={onKeyPress}
   />
   <button on:click={handleLogin} class="login-btn">Login</button>
+
+  <div class="links">
+    <Link to="/register" id="link-to-register">Create an account</Link>
+  </div>
+  
+  
+
+   
 </div>
 
 <style>
@@ -71,6 +80,16 @@
     align-items: center;
     flex-direction: column;
   }
+  
+  :global(#link-to-register) {
+    color: #148eff !important;
+    text-decoration: none !important;
+  }
+
+  .links{
+    margin-top: 20px;
+  }
+ 
 
   .login-heading {
     margin-bottom: 20px;
