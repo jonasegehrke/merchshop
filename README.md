@@ -7,3 +7,5 @@ MAIL_SERVICE=**MAIL SERVICE EG. GMAIL**
 MAIL_USER=**EMAIL**
 MAIL_PASS=**PASSWORD**
 ```
+
+The project is using MongoDB as database. Be sure to have it installed in order to run this project.
